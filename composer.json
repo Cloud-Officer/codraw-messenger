@@ -1,5 +1,5 @@
 {
-    "name": "draw/messenger",
+    "name": "codraw/messenger",
     "description": "Symfony messenger transport offering more option (base on doctrine transport)",
     "license": "MIT",
     "type": "library",
@@ -21,8 +21,8 @@
         "ext-json": "*",
         "doctrine/dbal": "^4.4",
         "doctrine/persistence": "^2.2 || ^3.0",
-        "draw/contracts": "^0.39",
-        "draw/core": "^0.39",
+        "codraw/contracts": "^0.39",
+        "codraw/core": "^0.39",
         "symfony/doctrine-bridge": "^6.4.0",
         "symfony/doctrine-messenger": "^6.4.0",
         "symfony/event-dispatcher": "^6.4.0",
@@ -37,14 +37,14 @@
         "ext-pcntl": "*",
         "colinodell/psr-testlogger": "^1.1",
         "doctrine/orm": "^3.6",
-        "draw/dependency-injection": "^0.39",
-        "draw/tester": "^0.39",
+        "codraw/dependency-injection": "^0.39",
+        "codraw/tester": "^0.39",
         "phpunit/phpunit": "^11.3 || ^12.0",
         "psr/log": "^3"
     },
     "suggest": {
         "ext-pcntl": "To allow message broker to catch signal",
-        "draw/framework-extra-bundle": "To integrate in Symfony"
+        "codraw/framework-extra-bundle": "To integrate in Symfony"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
