@@ -5,5 +5,5 @@ Symfony Messenger doctrine-based transport with more options: auto stamping, exp
 ## Installation
 
 ```bash
-composer require codraw/
+composer require codraw/messenger
 ```
