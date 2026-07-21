@@ -145,7 +145,7 @@ class StartMessengerBrokerCommand extends Command
 
         $process = max([$minProcesses, (int) round($processesPerCore * $this->cpuCounter->count())]);
 
-        if ($maxProcesses = null === $input->getOption('maximum-processes')) {
+        if (null === $input->getOption('maximum-processes')) {
             return $process;
         }
 

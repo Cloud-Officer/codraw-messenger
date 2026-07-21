@@ -18,7 +18,7 @@ class GetWaitingTimeEvent extends Event
         return $this->envelope;
     }
 
-    public function getThrowable(): \Throwable
+    public function getThrowable(): ?\Throwable
     {
         return $this->throwable;
     }

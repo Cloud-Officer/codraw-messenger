@@ -47,11 +47,15 @@ class SelfAwareMessageRetryableListener implements ResetInterface
     {
         $envelope = $event->getEnvelope();
 
-        if (!isset($this->waitingTimes[spl_object_hash($envelope)])) {
+        $hash = spl_object_hash($envelope);
+
+        if (!isset($this->waitingTimes[$hash])) {
             return;
         }
 
-        $event->setWaitingTime($this->waitingTimes[spl_object_hash($envelope)]);
+        $event->setWaitingTime($this->waitingTimes[$hash]);
+
+        unset($this->waitingTimes[$hash]);
     }
 
     public function reset(): void

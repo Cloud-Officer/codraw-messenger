@@ -2,6 +2,7 @@
 
 namespace Draw\Component\Messenger\Transport;
 
+use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\DBAL\Connection as DBALConnection;
 use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Schema\AbstractAsset;
@@ -111,11 +112,15 @@ class DrawTransport extends DoctrineTransport implements PurgeableTransportInter
 
             $sql = $this->driverConnection->createQueryBuilder()
                 ->delete($this->connection->getConfiguration()['table_name'])
-                ->andWhere('id IN ("'.implode('","', $ids).'")')
+                ->andWhere('id IN (:ids)')
                 ->getSQL()
             ;
 
-            $this->driverConnection->executeStatement($sql);
+            $this->driverConnection->executeStatement(
+                $sql,
+                ['ids' => $ids],
+                ['ids' => ArrayParameterType::STRING]
+            );
         }
     }
 
@@ -142,7 +147,7 @@ class DrawTransport extends DoctrineTransport implements PurgeableTransportInter
         $now = new \DateTimeImmutable();
         $availableAt = null;
         if (null !== $delay) {
-            $availableAt = $now->modify(\sprintf('%d seconds', $delay / 1000));
+            $availableAt = $now->modify(\sprintf('%d milliseconds', $delay));
         }
 
         $queryBuilder = $this->driverConnection->createQueryBuilder()

@@ -28,14 +28,20 @@ class ManuallyTriggeredMessageUrlGenerator
         \DateTimeInterface $expiration,
         ?string $type = null,
     ): string {
+        $stamp = $this->messageBus
+            ->dispatch(
+                $message,
+                [new ExpirationStamp($expiration)]
+            )
+            ->last(TransportMessageIdStamp::class)
+        ;
+
+        if (!$stamp instanceof TransportMessageIdStamp) {
+            throw new \RuntimeException(\sprintf('Message of class [%s] was not dispatched to a transport that provides a [%s]. Make sure it is routed to a transport that supports message ids.', $message::class, TransportMessageIdStamp::class));
+        }
+
         $parameters = [
-            ClickMessageAction::MESSAGE_ID_PARAMETER_NAME => $this->messageBus
-                ->dispatch(
-                    $message,
-                    [new ExpirationStamp($expiration)]
-                )
-                ->last(TransportMessageIdStamp::class)
-                ->getId(),
+            ClickMessageAction::MESSAGE_ID_PARAMETER_NAME => $stamp->getId(),
         ];
 
         if ($type) {
